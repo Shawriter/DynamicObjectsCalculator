@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
-
+from ..dbase import db
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -27,3 +27,7 @@ class ContentForm(FlaskForm):
     content = StringField('Content', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+class EntryForm(FlaskForm): 
+    title = StringField('Title') 
+    body = TextAreaField('Body') 
+   

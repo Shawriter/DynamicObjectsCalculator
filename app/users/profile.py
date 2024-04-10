@@ -3,10 +3,10 @@ from ..main.forms import ImageForm
 import os
 from werkzeug.utils import secure_filename
 from . import users
+from . import app
 
 
-
-@users.route('/image-upload/', methods=['GET', 'POST']) 
+@users.route('/post/', methods=['GET', 'POST']) 
 def image_upload(): 
     if request.method == 'POST': 
         form = ImageForm(request.form) 
@@ -19,3 +19,10 @@ def image_upload():
             return redirect(url_for('main.index')) 
     else: 
         form = ImageForm()
+
+    return render_template('image_upload.html', form=form)
+
+@users.route('/profile/', methods=['GET', 'POST'])
+def profile():
+    return render_template('profile.html')
+

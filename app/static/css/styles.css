@@ -58,3 +58,45 @@
     border-color: #49433b;
    
 }
+.front_body_class{
+    background-color: #000000;
+    height: 3000px;
+    background-image: url('..media/imgs/muinaisorava.png');
+}
+#search_box {
+    position: sticky;
+    top: 700px;
+    width: 500px;
+    display: block;
+    margin: auto;
+}
+#nav_bar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: #ced1cf;
+    color: #000000;
+    opacity: 0.3;
+    z-index: 1;
+}
+#navbarNav{
+    position: relative;
+    left: 1000px;
+    background-color: #b5bcb7;
+    color: #000000;
+    opacity: 0.3;
+ 
+}
+#square { 
+    width: 400px; 
+    height: 400px; 
+    background-image: url('muinaisorava.gif'); 
+    background-repeat: no-repeat;  /* Do not repeat the image */
+    transform: 0 ;
+    position: absolute; 
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px; 
+    z-index: 3;
+  } 

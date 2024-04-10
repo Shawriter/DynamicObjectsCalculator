@@ -5,6 +5,8 @@ from sqlalchemy.orm import scoped_session, sessionmaker, declarative_base
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from .. import db
+import datetime, re 
+from slugify import slugify
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -49,6 +51,29 @@ class UserRole(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), primary_key=True)
 
+def slugify_decorator(cls):
+
+    class slugWrapper(cls):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.generate_slug()
+
+        @staticmethod
+        def slugify(s):
+            return re.sub('[^\w]+', '-', s).lower()
+
+        def generate_slug(self):
+            self.slug = ''
+            if self.content:
+                self.slug = self.slugify(self.content)
+            return self.slug
+
+        def __repr__(self):
+            return f'<{self.__class__.__name__} {self.content!r}>'
+    
+    return slugWrapper
+
+@slugify_decorator
 class UserContent(db.Model):
     __tablename__ = 'user_content'
 
@@ -57,11 +82,16 @@ class UserContent(db.Model):
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-    def __init__(self, user_id, content):
-        self.user_id = user_id
-        self.content = content 
+ 
+@slugify_decorator
+class Content(db.Model):
+
+    __tablename__ = 'content'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    public_content = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
-        return f'<UserContent {self.content!r}>'
-
+        return f'<Content {self.name!r}>'
 

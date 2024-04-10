@@ -19,7 +19,7 @@
         <div class="login_div" >
             <div class="row justify-content-center" >
                 <div class="col-md-16">
-                    <form class="p-5 border rounded" action="{{ url_for('users.login') }}" id="glow_login" method="POST">
+                    <form class="p-5 border rounded" action="" id="glow_login" method="POST">
                         <h2 class="text-center mb-4" id="login_text">Login</h2>
                         {{ form.hidden_tag() }}
                         <!--{{ form.csrf_token }}-->
@@ -27,7 +27,7 @@
                         {{ form.username() }}</br>
                         {{ form.password.label(id="pword_label")}}</br>
                         {{ form.password() }}</br></br>
-                        {{ form.submit(class="btn btn-secondary btn-block" , action=) }}
+                        {{ form.submit(class="btn btn-secondary btn-block") }}
                        
                         <div class="text-center mt-3">
                             <a href="{{ url_for('users.register')}}" class="btn btn-link">Register</a>-->

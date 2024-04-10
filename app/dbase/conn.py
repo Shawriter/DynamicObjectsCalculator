@@ -5,8 +5,7 @@ from . import dbase
 
 
 def setup_session():
-    engine = create_engine('sqlite:///database.db')
-    db_session = scoped_session(sessionmaker(bind=engine))
+    pass
 
 
 
