@@ -3,11 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker, declarative_base
 from werkzeug.security import generate_password_hash, check_password_hash
-
-from . import dbconn
-from . import db
 import os
-
+from .. import db
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -66,16 +63,5 @@ class UserContent(db.Model):
 
     def __repr__(self):
         return f'<UserContent {self.content!r}>'
-    
-'''def db_connect():
-     new_user = User(username='user1', email='user1@example.com')
-     db.session.add(new_user)
-     db.session.commit()'''
-
-with app.app_context():
-    db.create_all()
 
 
-'''@.teardown_appcontext
-def shutdown_session(exception=None):
-    pass'''

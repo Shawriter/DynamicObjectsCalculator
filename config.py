@@ -2,10 +2,10 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or ''
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'testkey'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-        'sqlite:///' + 'object_calc_app.db'
+        'sqlite:///' + 'dev_database.db'
     
     @staticmethod
     def init_app(app):
@@ -13,8 +13,8 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SECRET_KEY = os.environ.get('SECRET_KEY') or ''
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + 'object_calc_app.db'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'testkey'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + 'dev_database.db'
     IMAGES_DIR = os.path.join(basedir, 'app/static/media/images')
     
 

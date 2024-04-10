@@ -13,7 +13,7 @@ import os
 import sys
 from sqlalchemy.pool import QueuePool
 #from .dbase import conn
-from .dbase.db import User, Role, UserRole, UserContent
+
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -22,7 +22,7 @@ db = SQLAlchemy()
 bootstrap = Bootstrap()
 #fa = FontAwesome()
 
-SECRET_KEY = os.environ.get('SECRET_KEY') or ''
+#SECRET_KEY = os.environ.get('SECRET_KEY') or ''
 csrf = CSRFProtect()
 moment = Moment()
 

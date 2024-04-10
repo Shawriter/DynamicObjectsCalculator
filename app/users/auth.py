@@ -4,7 +4,7 @@ from ..main.forms import LoginForm, RegisterForm
 
 @users.route('/login', methods=['POST'])
 def login():
-    return render_template('login.html')
+    return render_template('front.html')
 
 @users.route('/register', methods=['GET', 'POST'])
 def register():

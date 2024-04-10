@@ -26,3 +26,4 @@ class ImageForm(FlaskForm):
 class ContentForm(FlaskForm):  
     content = StringField('Content', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
