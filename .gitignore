@@ -1,3 +1,4 @@
 # .gitignore
 
 .venv/
+dbase/dev_database.db

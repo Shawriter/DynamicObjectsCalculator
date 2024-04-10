@@ -12,7 +12,8 @@ import logging
 import os
 import sys
 from sqlalchemy.pool import QueuePool
-
+#from .dbase import conn
+from .dbase.db import User, Role, UserRole, UserContent
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -31,8 +32,9 @@ def create_app(config_name):
     
     CORS(app,supports_credentials=True,expose_headers=["Content-Type","X-CSRFToken"])
     app.config.from_object(config[config_name])
+    
     config[config_name].init_app(app)
-    print(config[config_name].SQLALCHEMY_DATABASE_URI)
+    print(config[config_name].SQLALCHEMY_DATABASE_URI, config[config_name].IMAGES_DIR)
     bootstrap.init_app(app)
     #fa.init_app(app)
     
@@ -42,8 +44,6 @@ def create_app(config_name):
     #login_manager.init_app(app)
     
     csrf.init_app(app)
-    
-    
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)

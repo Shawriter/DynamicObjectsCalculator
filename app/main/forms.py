@@ -19,3 +19,10 @@ class RegisterForm(FlaskForm):
 
 
 
+class ImageForm(FlaskForm):
+    file = StringField('Image', validators=[DataRequired()])
+    submit = SubmitField('Upload')
+
+class ContentForm(FlaskForm):  
+    content = StringField('Content', validators=[DataRequired()])
+    submit = SubmitField('Submit')
