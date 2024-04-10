@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+
+    <title>ObjectCalculator</title>
+    <h1></h1>
+    
+</head>
+<body>
+
+    <div class="login_div_container">
+        
+        <div class="login_div" >
+            <div class="row justify-content-center" >
+                <div class="col-md-16">
+                    <form class="p-5 border rounded" action="/login" id="glow_login" method="POST">
+                        <h2 class="text-center mb-4" id="login_text">Login</h2>
+                        {{ form.hidden_tag() }}
+                        <!--{{ form.csrf_token }}-->
+                        {{ form.username.label(id="uname_label")}}</br>
+                        {{ form.username() }}</br>
+                        {{ form.password.label(id="pword_label")}}</br>
+                        {{ form.password() }}</br></br>
+                        {{ form.submit(class="btn btn-secondary btn-block") }}
+                       
+                        <div class="text-center mt-3">
+                            <a href="{{ url_for('users.register')}}" class="btn btn-link">Register</a>-->
+                            <a href="/forgot-password" class="btn btn-link">Forgot Password?</a>
+                        </div>
+                    </form>
+                 
+                </div>
+            </div>
+    
+        </div>
+    
+    </div>
+    
+         <div class="video-background">
+            <video autoplay muted loop id="bgVideo">
+                <source src="static/media/ObjectCalculatorVideo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+        </div>
+
+        <!-- Your content here -->
+    
+        
+
+<!--<div class="login_div_container">
+
+    <div class="login_div">
+
+        <form action="/login" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+
+    </div>
+
+    </div>-->
+   
+</body>
+</html>
+{% endblock %}
+

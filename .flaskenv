@@ -1,0 +1,2 @@
+FLASK_APP=appstart.py
+FLASK_DEBUG=1

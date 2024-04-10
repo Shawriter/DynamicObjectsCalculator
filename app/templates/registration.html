@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Include Bootstrap CSS -->
+</head>
+<body>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form method="POST">
+            {{ form.usernamereg.label(id="uname_label")}}</br>
+            {{ form.usernamereg() }}</br>
+            {{ form.passwordreg.label(id="pword_label")}}</br>
+            {% if form.passwordreg.errors %}
+                <ul>
+                    {% for error in form.passwordreg.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {{ form.passwordreg() }}</br></br>
+            {{ form.confirmpasswordreg.label(id="cpword_label")}}</br>
+            {{ form.confirmpasswordreg() }}</br></br>
+            {{ form.emailreg.label(id="email_label")}}</br>
+            {% if form.emailreg.errors %} 
+                <ul>
+                    {% for error in form.emailreg.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {{ form.emailreg() }}</br>
+            {{ form.confirmemailreg.label}}</br>
+            {{ form.confirmemailreg() }}</br></br>
+            
+            {{ form.submitreg(class="btn btn-secondary btn-block") }}
+
+        </form>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
+{% endblock %}
