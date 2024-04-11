@@ -14,20 +14,24 @@
     
 </head>
 <body class="front_body_class">
-    
+    <img src="{{ url_for('static', filename='media/imgs/navlogo2.png') }}" alt="logo" id="logo">
     <nav class="navbar navbar-expand-lg" id="nav_bar">
         <div class="nav_container">
-            <a class="navbar-brand" href="#">Navbar</a>
+            
+            
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">Add animal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="navid" href="#">Animal list</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">User profile</a>
@@ -41,22 +45,15 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>Welcome to Dynanimalia</h1>
+                <!--<h1>Animal database</h1>-->
                 <p></p>
             </div>
         </div>
     </div>
-    
-    <style> 
-       
-      </style> 
-      <script> 
-        
-      
-      </script> 
+
     </head> 
     <body> 
-      <div id="square"></div> 
+      <div id="squirrel"></div> 
     </body> 
     </html>
    
@@ -69,8 +66,31 @@
         </span> 
         </div> 
     </form> 
+    <div class="video-background">
+        <video class="video-background" autoplay muted loop id="bgVideo">
+            <source src="static/media/frontvideo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+    </div>
+    <div class="backdiv">
+        <img src="{{ url_for('static', filename='media/imgs/forestbackimg.jpg') }}" alt="frontbackimg" id="frontbackimg">
+    </div>
+    
+<div class="lower_body_container">
+    
+    <div class="cover_text_container">
+        
+            <h1>Welcome to animal database</h1>
+            <p>Welcome to our comprehensive Animal Database! This is your one-stop resource for detailed information about a wide variety of animals from around the globe. Whether you're a student researching for a project, a teacher preparing for a lesson, or simply an animal</br> enthusiast, our database is designed to provide you with the most accurate and up-to-date information.</br>
 
-  
+                Our database covers a vast array of species across all classifications of life. From the smallest insects to the largest mammals, from the most common pets to the most exotic wildlife, </br>our goal is to help you understand and appreciate the incredible diversity of animal life.
+                
+                Each entry in our database provides a wealth of information, including the animal's scientific name, its common name, its habitat, diet, lifespan, and much more. We also include interesting facts and trivia to make your learning experience more enjoyable.
+                
+                We're constantly updating and expanding our database, so be sure to check back often for new entries and updates. We're excited to share our love of animals with you. Welcome to the Animal Database!</p>
+        </div>
+    </div>
 
    
    

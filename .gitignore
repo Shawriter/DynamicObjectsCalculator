@@ -2,3 +2,5 @@
 
 .venv/
 dbase/dev_database.db
+./app/static/media/
+app/static/media/
