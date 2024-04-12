@@ -22,12 +22,12 @@ function initialize(){
 
     var coordinates1 = [left, right, top, bottom]; 
 
-    moveSquare(left, right
+    moveSquirrel(left, right
       , top, bottom, 10, coordinates1) 
   }, false); 
 } 
 
-function moveSquare(left2, right2
+function moveSquirrel(left2, right2
       , top2, bottom2,numMoves, coordinates1) { 
 
   
@@ -61,9 +61,9 @@ function moveSquare(left2, right2
 
   }
   
-  console.log(100*Math.round(direction)  + "This is the direction of the squirrel")
+  console.log(Math.round(direction))
 
-  document.getElementById("squirrel").style.transform = "rotate" + "("+ 100*Math.round(direction) +"deg)";
+  document.getElementById("squirrel").style.transform = "rotate" + "("+ Math.round(direction) +"deg)";
   document.getElementById("squirrel").style.transition = "all 2s";
   
   if (numMoves > 0) { 

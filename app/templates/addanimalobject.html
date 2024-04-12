@@ -1,0 +1,34 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add</title>
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <h1>Add an animal</h1>
+    <form action="" class="form form- horizontal" method="post"> 
+        {% for field in form %} 
+          <div class="form-group"> 
+            {{ field.label(class='col-sm-3 control-label') }} 
+            <div class="col-sm-9"> 
+              {{ field(class='form-control') }} 
+            </div> 
+          </div> 
+        {% endfor %} 
+        <div class="form-group"> 
+          <div class="col-sm-offset-3 col-sm-9"> 
+            <button type="submit" class="btn btn-default">Add</button> 
+            <a class="btn" href="{{ url_for('main.front') }}">Cancel</a> 
+          </div> 
+        </div> 
+      </form>
+</body>
+</html>
+    
+    {% endblock %}

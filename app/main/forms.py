@@ -30,4 +30,8 @@ class ContentForm(FlaskForm):
 class EntryForm(FlaskForm): 
     title = StringField('Title') 
     body = TextAreaField('Body') 
-   
+    status = SelectField('Status', choices=[('draft', 'Draft'), ('published', 'Published')])
+    def save_entry(self, entry):         
+       self.populate_obj(entry)         
+       entry.generate_slug()
+       return entry

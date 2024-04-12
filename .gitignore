@@ -1,5 +1,5 @@
 # .gitignore
 
 .venv/
-app/dbase/dev_database.db
+app/dbase/devdatabase.db
 app/static/media/
