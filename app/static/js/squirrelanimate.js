@@ -1,12 +1,15 @@
 function getRandomInt() {
-    min = Math.ceil(10);
-    max = Math.floor(2000);
-    var rand = Math.floor(Math.random() * (max - min + 1)) + min;
+    min = Math.ceil(100);
+    max = Math.floor(5000);
+    var rand = Math.floor(Math.random() * (max - min + 1));
     return rand;
   }
 window.addEventListener('load',initialize,false); 
 function initialize(){
-  
+
+  var screenWidth = document.documentElement.clientWidth;
+  console.log(screenWidth);
+
   document.getElementById("squirrel").addEventListener('mouseover',function(e){ 
     
     var left = window.getComputedStyle(e.target).getPropertyValue("left"); 
@@ -14,7 +17,7 @@ function initialize(){
     var top = window.getComputedStyle(e.target).getPropertyValue("top");
     var bottom = window.getComputedStyle(e.target).getPropertyValue("bottom");
     
-    
+    document.getElementById("front_body_id").style.backgroundImage = "url('/static/media/imgs/forestbackmountainimg.jpg')";
     left = parseInt(left, 10); 
     right = parseInt(right, 10);
     top = parseInt(top, 10);
@@ -23,12 +26,12 @@ function initialize(){
     var coordinates1 = [left, right, top, bottom]; 
 
     moveSquirrel(left, right
-      , top, bottom, 10, coordinates1) 
+      , top, bottom, 10, coordinates1, screenWidth) 
   }, false); 
 } 
 
 function moveSquirrel(left2, right2
-      , top2, bottom2,numMoves, coordinates1) { 
+      , top2, bottom2,numMoves, coordinates1, screenWidth) { 
 
   
   var left2 = getRandomInt();
@@ -41,11 +44,15 @@ function moveSquirrel(left2, right2
   console.log(coordinates1);
   console.log(coordinates2);
   
-  document.getElementById("squirrel").style.left = left2 + "px";
-  document.getElementById("squirrel").style.right = right2 + "px";
-  document.getElementById("squirrel").style.top = top2 + "px";
-  document.getElementById("squirrel").style.bottom = bottom2 + "px";
+  var leftMove = left2 + 300 + "px";
+  var bottomMove = bottom2 + 300 + "px";
 
+  document.getElementById("squirrel").style.left = leftMove;
+  document.getElementById("squirrel").style.right = right2 + 300 + "px";
+  document.getElementById("squirrel").style.top = top2 + 300 + "px";
+  document.getElementById("squirrel").style.bottom = bottomMove;
+  screenWidth = 300;
+  
   var direction = trig(coordinates1, coordinates2);
 
   function trig(coordinates1, coordinates2){
@@ -63,11 +70,11 @@ function moveSquirrel(left2, right2
   
   console.log(Math.round(direction))
 
-  document.getElementById("squirrel").style.transform = "rotate" + "("+ Math.round(direction) +"deg)";
+  document.getElementById("squirrel").style.transform = "rotate" + "("+ (Math.round(direction)*100) +"deg)";
   document.getElementById("squirrel").style.transition = "all 2s";
   
-  if (numMoves > 0) { 
-    numMoves--;
+  /*if (numMoves > 0) { 
+    //numMoves--;
 
     left2++;
     right2++;
@@ -76,5 +83,5 @@ function moveSquirrel(left2, right2
 
   } else { 
     return; 
-  } 
+  } */
 } 

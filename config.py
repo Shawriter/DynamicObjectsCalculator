@@ -15,7 +15,7 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'testkey'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + 'dev_database.db'
-    IMAGES_DIR = os.path.join(basedir, 'app/static/media/images')
+    IMAGES_DIR = os.path.join(basedir, 'app\\static\\uploads')
     
 
 config = {

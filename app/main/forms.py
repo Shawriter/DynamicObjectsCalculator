@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, SelectField
+from wtforms import StringField, SubmitField, TextAreaField, SelectField, FileField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from ..dbase import db
 
@@ -20,16 +20,16 @@ class RegisterForm(FlaskForm):
 
 
 class ImageForm(FlaskForm):
-    file = StringField('Image', validators=[DataRequired()])
+    file = FileField('Image', validators=[DataRequired()])
     submit = SubmitField('Upload')
 
-class ContentForm(FlaskForm):  
+class Content(FlaskForm):  
     content = StringField('Content', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
-class EntryForm(FlaskForm): 
-    title = StringField('Title') 
-    body = TextAreaField('Body') 
+class ContentForm(FlaskForm): 
+    title = StringField('Title', validators=[DataRequired()]) 
+    body = TextAreaField('Body', validators=[DataRequired()]) 
     status = SelectField('Status', choices=[('draft', 'Draft'), ('published', 'Published')])
     def save_entry(self, entry):         
        self.populate_obj(entry)         

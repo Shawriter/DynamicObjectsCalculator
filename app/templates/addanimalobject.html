@@ -1,5 +1,5 @@
 {% extends 'base.html'%}
-
+{% from "macros/generalform.html" import form_field %}
 {% block content %}
 
 <!DOCTYPE html>
@@ -12,22 +12,23 @@
 </head>
 <body>
     <h1>Add an animal</h1>
-    <form action="" class="form form- horizontal" method="post"> 
-        {% for field in form %} 
-          <div class="form-group"> 
-            {{ field.label(class='col-sm-3 control-label') }} 
-            <div class="col-sm-9"> 
-              {{ field(class='form-control') }} 
-            </div> 
-          </div> 
-        {% endfor %} 
-        <div class="form-group"> 
-          <div class="col-sm-offset-3 col-sm-9"> 
-            <button type="submit" class="btn btn-default">Add</button> 
-            <a class="btn" href="{{ url_for('main.front') }}">Cancel</a> 
-          </div> 
+    
+    <form action="{{ url_for('users.image_upload') }}" enctype="multipart/form-data" method="post">
+        {{ form2.hidden_tag() }}
+      {% for field in form2 %} 
+        {{ form_field(field) }} 
+      {% endfor %} 
+      <div class="form-group"> 
+        <div class="col-sm-offset-3 col-sm-9"> 
+          <input type="file" name="file">
+          <button type="submit" class="btn btn-default">Upload</button>
+          <a class="btn" href="{{ url_for('main.index') }}">Cancel</a> 
         </div> 
-      </form>
+      </div> 
+    </form> 
+     
+    </div> 
+  </div> 
 </body>
 </html>
     

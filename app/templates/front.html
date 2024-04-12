@@ -13,7 +13,7 @@
     <script src="{{ url_for('static', filename='js/squirrelanimate.js') }}"></script>
     
 </head>
-<body class="front_body_class">
+<body id="front_body_id">
    
 
     
@@ -29,10 +29,7 @@
     </head> 
     <body> 
       <div id="squirrel"></div> 
-    </body> 
-    </html>
-   
-    <form class="form-inline well" id="search_box" method="get" role="form"> 
+      <form class="form-inline well" id="search_box" method="get" role="form"> 
         <div class="input-group"> 
         <input class="form-control input-xs" name="q" placehold- 
     er="Search..."  /> 
@@ -41,6 +38,10 @@
         </span> 
         </div> 
     </form> 
+    </body> 
+    </html>
+   
+    
     <div class="video-background">
         <video class="video-background" autoplay muted loop id="bgVideo">
             <source src="static/media/frontvideo.mp4" type="video/mp4">
