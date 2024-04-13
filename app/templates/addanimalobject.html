@@ -1,5 +1,5 @@
 {% extends 'base.html'%}
-{% from "macros/generalform.html" import form_field %}
+{% from "macros/generalform.html" import form_field, navbar %}
 {% block content %}
 
 <!DOCTYPE html>
@@ -11,11 +11,12 @@
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
 </head>
 <body>
+    {{navbar()}}
     <h1>Add an animal</h1>
     
     <form action="{{ url_for('users.image_upload') }}" enctype="multipart/form-data" method="post">
-        {{ form2.hidden_tag() }}
-      {% for field in form2 %} 
+        {{ form.hidden_tag() }}
+      {% for field in form %} 
         {{ form_field(field) }} 
       {% endfor %} 
       <div class="form-group"> 

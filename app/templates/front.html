@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% from "macros/generalform.html" import form_field, navbar, message_macro %}
 {% block content %}
 
 <!DOCTYPE html>
@@ -16,7 +16,14 @@
 <body id="front_body_id">
    
 
-    
+    {{navbar()}}
+    <div class="video-background">
+        <video class="video-background" autoplay muted loop id="bgVideo">
+            <source src="static/media/frontvideo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+    </div>
     <div class="container">
         <div class="row">
             <div class="col">
@@ -31,8 +38,7 @@
       <div id="squirrel"></div> 
       <form class="form-inline well" id="search_box" method="get" role="form"> 
         <div class="input-group"> 
-        <input class="form-control input-xs" name="q" placehold- 
-    er="Search..."  /> 
+        <input class="form-control input-xs" name="q" placeholder="Search..."  /> 
         <span class="input-group-btn"> 
             <button class="btn btn-default" type="submit">Go</button> 
         </span> 
@@ -41,14 +47,16 @@
     </body> 
     </html>
    
-    
-    <div class="video-background">
-        <video class="video-background" autoplay muted loop id="bgVideo">
-            <source src="static/media/frontvideo.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        
-    </div>
+    {% if current_user.is_authenticated %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Welcome {{ current_user.username }}</h1>
+                {{ message_macro() }}    
+                <p></p>
+            </div>
+        </div>
+    {% endif %}
     <div class="backdiv">
         <img src="{{ url_for('static', filename='media/imgs/forestbackimg.jpg') }}" alt="frontbackimg" id="frontbackimg">
     </div>
@@ -73,4 +81,4 @@
 </body>
 </html>
     
-    {% endblock %} 
+{% endblock %} 

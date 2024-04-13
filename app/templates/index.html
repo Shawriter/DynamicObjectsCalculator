@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% from "macros/generalform.html" import message_macro %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +19,7 @@
         <div class="login_div" >
             <div class="row justify-content-center" >
                 <div class="col-md-16">
-                    <form class="p-5 border rounded" action="" id="glow_login" method="POST">
+                    <form class="p-5 border rounded" action="{{ url_for('users.login', next=request.args.get('next','')) }}" id="glow_login" method="POST">
                         <h2 class="text-center mb-4" id="login_text">Login</h2>
                         {{ form.hidden_tag() }}
                         <!--{{ form.csrf_token }}-->
@@ -33,6 +33,7 @@
                             <a href="{{ url_for('users.register')}}" class="btn btn-link">Register</a>
                             <a href="/forgot-password" class="btn btn-link">Forgot Password?</a>
                         </div>
+                        {{ message_macro() }} 
                     </form>
                  
                 </div>
@@ -50,7 +51,7 @@
             
         </div>
 
-   
+
 </body>
 </html>
 {% endblock %}

@@ -15,16 +15,16 @@ def slugify_decorator(cls):
         def generate_slug(self):
             self.slug = ''
            
-            if self.content:
-                self.slug = self.slugify(self.content)
-                self.repr_arg = self.content
-            elif self.public_content:
-                self.slug = self.slugify(self.public_content)
-                self.repr_arg = self.public_content
+            #if self.content:
+                #self.slug = self.slugify(self.content)
+                #self.repr_arg = self.content
+            #elif self.public_content:
+                #self.slug = self.slugify(self.public_content)
+                #self.repr_arg = self.public_content
                 
-            return self.slug, self.repr_arg
+            return self.slug
 
         def __repr__(self):
-            return f'<{self.__class__.__name__} {self.repr_arg!r}>'
+            return f'<{self.__class__.__name__} {self.slug!r}>'
     
     return slugWrapper

@@ -1,3 +1,49 @@
+<link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+{% macro navbar() %}
+    <img src="{{ url_for('static', filename='media/imgs/navlogo2.png') }}" alt="logo" id="logo">
+    <nav class="navbar navbar-expand-lg" id="nav_bar">
+        <div class="nav_container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{url_for('main.front')}}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('users.add')}}">Add animal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="navid" href="#">Animal list</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">User profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('users.logout', next=request.path) }}">Log out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endmacro %}
+
+{% macro message_macro() %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            
+                            {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                              </div>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                        {% endwith %}
+{% endmacro %}
+
 {% macro form_field(field) %} 
   <div class="form-group{% if field.errors %} has-error has-feedback{% 
 endif %}"> 

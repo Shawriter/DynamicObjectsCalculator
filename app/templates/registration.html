@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from "macros/generalform.html" import form_field, navbar %}
 {% block content %}
 <!DOCTYPE html>
 <html>
@@ -6,9 +7,12 @@
     <!-- Include Bootstrap CSS -->
 </head>
 <body>
+    {{navbar()}}    
     <div class="container">
         <h2>Registration Form</h2>
-        <form method="POST">
+        <form action="{{url_for('users.register')}}" method="POST">
+            
+            {{ form.hidden_tag() }}
             {{ form.usernamereg.label(id="uname_label")}}</br>
             {{ form.usernamereg() }}</br>
             {{ form.passwordreg.label(id="pword_label")}}</br>

@@ -11,18 +11,21 @@ from config import config
 import logging
 import os
 import sys
-#from sqlalchemy.pool import QueuePool
-#from .dbase import conn
+
 
 
 login_manager = LoginManager()
-login_manager.login_view = 'auth.login'
-db = SQLAlchemy()
+login_manager.login_view = 'main.index'
+db_conn = SQLAlchemy()
 
 bootstrap = Bootstrap()
 #fa = FontAwesome()
 csrf = CSRFProtect()
 moment = Moment()
+
+#@login_manager.user_loader
+#def load_user(user_id):
+    #return User.query.get(int(user_id))
 
 def get_current_user():
     return current_user
@@ -39,7 +42,7 @@ def create_app(config_name):
     #fa.init_app(app)
     
     moment.init_app(app)
-    db.init_app(app)
+    db_conn.init_app(app)
     print(config[config_name].SQLALCHEMY_DATABASE_URI, config[config_name].IMAGES_DIR)
     login_manager.init_app(app)
     
