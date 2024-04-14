@@ -11,7 +11,7 @@ from ..main.extradecorators import slugify_decorator
 import re
 
 
-#@slugify_decorator
+@slugify_decorator
 class User(UserMixin, db_conn.Model):
     __tablename__ = 'users'
 
@@ -19,7 +19,7 @@ class User(UserMixin, db_conn.Model):
     username = db_conn.Column(db_conn.String, unique=True, nullable=False)
     password_hash = db_conn.Column(db_conn.String, nullable=False)
     email = db_conn.Column(db_conn.String, unique=True, nullable=False)
-    #slug = db_conn.Column(db_conn.String, unique=True, nullable=False)
+    slug = db_conn.Column(db_conn.String, unique=True, nullable=False)
     created_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp())
     updated_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp(), onupdate=db_conn.func.current_timestamp())
 
@@ -33,7 +33,7 @@ class User(UserMixin, db_conn.Model):
         raise AttributeError('password is not a readable attribute')
     
     @password.setter
-    def password(self, password):
+    def password(self, password) -> str:
 
         self.password_hash = generate_password_hash(password)
         return self.password_hash
@@ -92,7 +92,23 @@ class Content(db_conn.Model):
 
     id = db_conn.Column(db_conn.Integer, primary_key=True)
     name = db_conn.Column(db_conn.String, nullable=False)
+    species = db_conn.Column(db_conn.String, nullable=False)
+    animal_slug = db_conn.Column(db_conn.String, nullable=False)
     public_content = db_conn.Column(db_conn.Text, nullable=False)
+    created_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp())
+    updated_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp(), onupdate=db_conn.func.current_timestamp())
 
+class AnimalPicture(db_conn.Model):
+    __tablename__ = 'animal_pictures'
+
+    id = db_conn.Column(db_conn.Integer, primary_key=True)
+    content_id = db_conn.Column(db_conn.Integer, db_conn.ForeignKey('content.id'), nullable=False)
+    picture_url = db_conn.Column(db_conn.String, nullable=False)
+    created_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp())
+    updated_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp(), onupdate=db_conn.func.current_timestamp())
+
+    def __repr__(self):
+        return f'<AnimalPicture {self.id!r}>'
+    
     def __repr__(self):
         return f'<Content {self.name!r}>'

@@ -10,13 +10,15 @@
     <title>Add</title>
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
 </head>
-<body>
+<body id="add_content_body">
     {{navbar()}}
-    <h1>Add an animal</h1>
-    
-    <form action="{{ url_for('users.image_upload') }}" enctype="multipart/form-data" method="post">
-        {{ form.hidden_tag() }}
+    <div class="add_content_container">
+    <h1 id="add_header">Add an animal</h1>
+    <img src="{{ url_for('static', filename='media/imgs/lakebird_add_content.jpg') }}" alt="animal" id="add_content_div_img">
+    <form action="{{ url_for('users.image_upload') }}" enctype="multipart/form-data" method="post" id="add_content_form">
+      {{ form.hidden_tag() }}
       {% for field in form %} 
+        
         {{ form_field(field) }} 
       {% endfor %} 
       <div class="form-group"> 
@@ -26,9 +28,8 @@
           <a class="btn" href="{{ url_for('main.index') }}">Cancel</a> 
         </div> 
       </div> 
-    </form> 
-     
-    </div> 
+    </form>
+
   </div> 
 </body>
 </html>

@@ -8,19 +8,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
+                    <li class="nav-item {{ 'current' if request.path == url_for('main.front') else '' }}">
                         <a class="nav-link" href="{{url_for('main.front')}}">Home</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ 'current' if request.path == url_for('main.front') else '' }}">
                         <a class="nav-link" href="{{url_for('users.add')}}">Add animal</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="navid" href="#">Animal list</a>
+                    <li class="nav-item {{ 'current' if request.path == url_for('main.front') else '' }}">
+                        <a class="nav-link" href="#">Animal list</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ 'current' if request.path == url_for('main.front') else '' }}">
                         <a class="nav-link" href="#">User profile</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ 'current' if request.path == url_for('main.front') else '' }}">
                         <a class="nav-link" href="{{ url_for('users.logout', next=request.path) }}">Log out</a>
                     </li>
                 </ul>
@@ -34,7 +34,7 @@
                         {% if messages %}
                             
                             {% for category, message in messages %}
-                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" id="alerts" role="alert">
                                 {{ message }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                               </div>

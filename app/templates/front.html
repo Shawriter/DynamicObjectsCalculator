@@ -47,16 +47,7 @@
     </body> 
     </html>
    
-    {% if current_user.is_authenticated %}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Welcome {{ current_user.username }}</h1>
-                {{ message_macro() }}    
-                <p></p>
-            </div>
-        </div>
-    {% endif %}
+   
     <div class="backdiv">
         <img src="{{ url_for('static', filename='media/imgs/forestbackimg.jpg') }}" alt="frontbackimg" id="frontbackimg">
     </div>
