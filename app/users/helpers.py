@@ -1,5 +1,5 @@
 from flask import render_template, request 
-from ..dbase import conn, db
+from ..database import conn, db
 
 
 

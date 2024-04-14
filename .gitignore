@@ -1,6 +1,6 @@
 # .gitignore
 
-.venv/
-app/dbase/dev_database.db
+venv/
+app/database/dev_database.db
 app/static/media/
 app/static/uploads/

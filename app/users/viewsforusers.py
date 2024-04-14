@@ -5,7 +5,7 @@ from ..main.forms import ContentForm
 from .. import db_conn
 from werkzeug.utils import secure_filename
 from . import users
-from ..dbase.db import UserContent, Content
+from ..database.db import UserContent, Content
 from .. import config
 from flask_login import login_required
 

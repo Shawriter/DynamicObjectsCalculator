@@ -22,7 +22,7 @@
                     <form class="p-5 border rounded" action="{{ url_for('users.login', next=request.args.get('next','')) }}" id="glow_login" method="POST">
                         <h2 class="text-center mb-4" id="login_text">Login</h2>
                         {{ form.hidden_tag() }}
-                        <!--{{ form.csrf_token }}-->
+
                         {{ form.username.label(id="uname_label")}}</br>
                         {{ form.username() }}</br>
                         {{ form.password.label(id="pword_label")}}</br>

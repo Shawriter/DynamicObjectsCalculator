@@ -1,8 +1,8 @@
-from flask import Flask, request, render_template, redirect, url_for
+#from flask import Flask, request, render_template, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, SelectField, FileField, PasswordField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
-from ..dbase import db
+from ..database import db
 #from ..users.auth import login
 
 class LoginForm(FlaskForm):
@@ -13,8 +13,9 @@ class LoginForm(FlaskForm):
 
         if not super(LoginForm, self).validate(): 
             return False 
+        else:
+            return True
     
-        return True
 
 class RegisterForm(FlaskForm):
     usernamereg = StringField('Username', validators=[DataRequired()])

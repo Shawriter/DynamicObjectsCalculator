@@ -9,17 +9,18 @@ import slugify
 from .. import db_conn
 from ..main.extradecorators import slugify_decorator
 import re
+import datetime
 
 
 @slugify_decorator
 class User(UserMixin, db_conn.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'users_table'
 
     id = db_conn.Column(db_conn.Integer, primary_key=True)
     username = db_conn.Column(db_conn.String, unique=True, nullable=False)
     password_hash = db_conn.Column(db_conn.String, nullable=False)
     email = db_conn.Column(db_conn.String, unique=True, nullable=False)
-    slug = db_conn.Column(db_conn.String, unique=True, nullable=False)
+    slugified = db_conn.Column(db_conn.String, unique=True, nullable=True)
     created_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp())
     updated_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp(), onupdate=db_conn.func.current_timestamp())
 
@@ -58,33 +59,36 @@ class User(UserMixin, db_conn.Model):
 
     
     def __repr__(self):
-        return f'<User {self.name!r}>'''
+        return f'<User {self.name!r}>'
 
 
 class Role(db_conn.Model):
+
     __tablename__ = 'roles'
 
     id = db_conn.Column(db_conn.Integer, primary_key=True)
     role_name = db_conn.Column(db_conn.String, unique=True, nullable=False)
 
 class UserRole(db_conn.Model):
+
     __tablename__ = 'user_roles'
 
-    user_id = db_conn.Column(db_conn.Integer, db_conn.ForeignKey('users.id'), primary_key=True)
+    user_id = db_conn.Column(db_conn.Integer, db_conn.ForeignKey('users_table.id'), primary_key=True)
     role_id = db_conn.Column(db_conn.Integer, db_conn.ForeignKey('roles.id'), primary_key=True)
 
 
 
 @slugify_decorator
 class UserContent(db_conn.Model):
+
     __tablename__ = 'user_content'
 
     content_id = db_conn.Column(db_conn.Integer, primary_key=True)
-    user_id = db_conn.Column(db_conn.Integer, db_conn.ForeignKey('users.id'), nullable=False)
+    user_id = db_conn.Column(db_conn.Integer, db_conn.ForeignKey('users_table.id'), nullable=False)
+    title = db_conn.Column(db_conn.String, nullable=False)
     content = db_conn.Column(db_conn.Text, nullable=False)
     created_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp())
 
- 
 @slugify_decorator
 class Content(db_conn.Model):
 
@@ -92,18 +96,18 @@ class Content(db_conn.Model):
 
     id = db_conn.Column(db_conn.Integer, primary_key=True)
     name = db_conn.Column(db_conn.String, nullable=False)
-    species = db_conn.Column(db_conn.String, nullable=False)
-    animal_slug = db_conn.Column(db_conn.String, nullable=False)
+    species = db_conn.Column(db_conn.String, nullable=True)
+    title = db_conn.Column(db_conn.String, nullable=False)
     public_content = db_conn.Column(db_conn.Text, nullable=False)
     created_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp())
     updated_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp(), onupdate=db_conn.func.current_timestamp())
 
-class AnimalPicture(db_conn.Model):
-    __tablename__ = 'animal_pictures'
+class Picture(db_conn.Model):
+    __tablename__ = 'pictures'
 
     id = db_conn.Column(db_conn.Integer, primary_key=True)
     content_id = db_conn.Column(db_conn.Integer, db_conn.ForeignKey('content.id'), nullable=False)
-    picture_url = db_conn.Column(db_conn.String, nullable=False)
+    picture_url_slug = db_conn.Column(db_conn.String, nullable=False)
     created_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp())
     updated_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp(), onupdate=db_conn.func.current_timestamp())
 

@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, request, flash, g
 from ..main.forms import LoginForm, RegisterForm
 from app import login_manager
 from flask_login import login_user, logout_user, login_required, current_user
-from ..dbase import db
+from ..database import db
 from .. import db_conn
 
 @login_manager.user_loader 
@@ -18,8 +18,10 @@ def login():
     print(user, password)
     def login_final(username): 
         if request.method == "POST": 
-            form = LoginForm(request.form) 
+            form = LoginForm() 
         try:
+            print("TRYING")
+            print(request.form)
             if form.validate(): 
                     print("VALIDATING")
                     login_user(username) 
@@ -27,8 +29,9 @@ def login():
                     flash("Successfully logged in" , "success") 
                     print("FLASHING")
                     
-                    return redirect(url_for("main.front"))
+                    return redirect(url_for('main.front'))
             else: 
+                print(form.errors)
                 form = LoginForm() 
                 return render_template('index.html', form=form)
         except Exception as e:
@@ -44,8 +47,8 @@ def login():
             if user and user.check_password(password): 
                 print("HELLO")
                 print(type(user))
-                if user != None and password != None:
-                   return login_final(user)
+                
+                return login_final(user)
                 
             
         except Exception as e:
@@ -57,7 +60,7 @@ def login():
         return response
     else:
         form = LoginForm()
-        return render_template('index.html', form=form)
+        return render_template('404.html')
 
 
 @users.route('/logout/', methods=['GET', 'POST'])
