@@ -20,9 +20,5 @@ def front():
 def logout():
     return redirect(url_for('main.index'))
 
-@main.route('/content', methods=['GET', 'POST'])
-def content():
-    return render_template('content.html')
-
 
 

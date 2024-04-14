@@ -1,14 +1,13 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
-from ..main.forms import ImageForm
+from ..main.forms import ImageForm, ContentForm
 import os
-from ..main.forms import ContentForm
 from .. import db_conn
 from werkzeug.utils import secure_filename
 from . import users
 from ..database.db import UserContent, Content
 from .. import config
-from flask_login import login_required
-
+from flask_login import login_required, current_user
+from . import helpers
 
 
 @users.route('/profile/<slug>', methods=['GET', 'POST'])
@@ -62,13 +61,31 @@ def edit(slug):
     return render_template('addanimalobject.html', entry=entry, form=form)
 
 @users.route('/create', methods=['GET', 'POST'])
-@login_required 
-def image_upload(): 
+def image_upload():  
+    if current_user.is_authenticated:
+        print("User is authenticated")
+        
     if request.method == 'POST': 
-        form = ImageForm(request.form) 
+
+        content_form = ContentForm(request.form)
+        image_form = ImageForm(request.form) 
+
+        title = content_form.title.data
+        body = content_form.body.data
+        family = content_form.status.data
+        
         image_file = request.files['file'] 
         filename = os.path.join(config['development'].IMAGES_DIR, 
                                     secure_filename(image_file.filename)) 
+        print(request.form)
+        new_content = Content(title=title, body=body, family=lambda: helpers.get_family())
+        new_content.image_path = filename  
+
+        
+        #db_conn.session.add(new_content)
+
+        #db_conn.session.commit()
+
             
         assert image_file and filename is not None, 'file and filename not found' 
 
@@ -76,5 +93,10 @@ def image_upload():
         flash('Saved %s' % os.path.basename(filename), 'success') 
         return redirect(url_for('main.index')) 
   
-    return render_template('index.html', form=form)
+    return render_template('index.html')
+
+
+@users.route('/contents', methods=['GET', 'POST'])
+def content():
+    return render_template('animal_list.html')
 

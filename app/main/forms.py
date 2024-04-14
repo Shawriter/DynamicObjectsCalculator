@@ -46,7 +46,47 @@ class Content(FlaskForm):
 class ContentForm(FlaskForm): 
     title = StringField('Title', validators=[DataRequired()]) 
     body = TextAreaField('Body', validators=[DataRequired()]) 
-    status = SelectField('Status', choices=[('draft', 'Draft'), ('published', 'Published')])
+    status = SelectField('Family', choices=[('Acanthuridae', 'Surgeonfishes'),
+   
+    ('Apidae', 'Bees'),
+    ('Accipitridae', 'Hawks, Eagles'),
+    ('Ambystomatidae', 'Mole Salamanders'),
+    ('Anatidae', 'Ducks, Geese, Swans'),
+    ('Bufonidae', 'Toads'),
+    ('Bovidae', 'Cattle, Goats, Sheep'),
+    ('Canidae', 'Dogs'),
+    ('Cheloniidae', 'Sea Turtles'),
+    ('Cervidae', 'Deer'),
+    ('Cichlidae', 'Cichlids'),
+    ('Columbidae', 'Pigeons, Doves'),
+    ('Crocodylidae', 'Crocodiles'),
+    ('Cyprinidae', 'Carps, Minnows'),
+    ('Drosophilidae', 'Fruit Flies'),
+    ('Elephantidae', 'Elephants'),
+    ('Falconidae', 'Falcons'),
+    ('Felidae', 'Cats'),
+    ('Formicidae', 'Ants'),
+    ('Gobiidae', 'Gobies'),
+    ('Haemulidae', 'Grunts, Sweetlips'),
+    ('Hominidae', 'Great Apes, including Humans'),
+    ('Hylidae', 'Tree Frogs'),
+    ('Lepidoptera', 'Butterflies, Moths'),
+    ('Passeridae', 'Sparrows'),
+    ('Psittacidae', 'Parrots'),
+    ('Pythonidae', 'Pythons'),
+    ('Ranidae', 'True Frogs'),
+    ('Salmonidae', 'Salmons, Trouts'),
+    ('Scarabaeidae', 'Scarab Beetles'),
+    ('Scombridae', 'Mackerels, Tunas'),
+    ('Strigidae', 'Owls'),
+    ('Tetraodontidae', 'Pufferfishes'),
+    ('Testudinidae', 'Tortoises'),
+    ('Tettigoniidae', 'Katydids'),
+    ('Ursidae', 'Bears'),
+    ('Viperidae', 'Vipers')])
+
+all_families.sort(key=lambda x: x[1])
+
     def save_entry(self, entry):         
        self.populate_obj(entry)         
        entry.generate_slug()
