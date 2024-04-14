@@ -4,10 +4,10 @@ import os
 from .. import db_conn
 from werkzeug.utils import secure_filename
 from . import users
-from ..database.db import UserContent, Content
+from ..database.db import UserContent, Content, Picture
 from .. import config
 from flask_login import login_required, current_user
-from . import helpers
+
 
 
 @users.route('/profile/<slug>', methods=['GET', 'POST'])
@@ -68,35 +68,39 @@ def image_upload():
     if request.method == 'POST': 
 
         content_form = ContentForm(request.form)
-        image_form = ImageForm(request.form) 
 
         title = content_form.title.data
-        body = content_form.body.data
-        family = content_form.status.data
+        public_content = content_form.body.data
+        species = content_form.family.data
         
         image_file = request.files['file'] 
         filename = os.path.join(config['development'].IMAGES_DIR, 
                                     secure_filename(image_file.filename)) 
-        print(request.form)
-        new_content = Content(title=title, body=body, family=lambda: helpers.get_family())
-        new_content.image_path = filename  
-
         
-        #db_conn.session.add(new_content)
+        filenamedb =  config['development'].IMAGES_DIR + "\\" + secure_filename(image_file.filename)
+        print(filenamedb, 'filename and filenamedb')
 
-        #db_conn.session.commit()
+        new_content = Content(name=title, title=title, public_content=public_content, species=species)
+        new_content.image_path = filenamedb
+        db_conn.session.add(new_content)
+        db_conn.session.commit() 
+
+        new_content_image = Picture(content_id=new_content.id, picture_url_slug=filenamedb) #content_id is a constraint
+        db_conn.session.add(new_content_image)
+        db_conn.session.commit()
 
             
         assert image_file and filename is not None, 'file and filename not found' 
 
         image_file.save(filename) 
         flash('Saved %s' % os.path.basename(filename), 'success') 
-        return redirect(url_for('main.index')) 
+        return redirect(url_for('users.content')) 
   
     return render_template('index.html')
 
 
 @users.route('/contents', methods=['GET', 'POST'])
 def content():
-    return render_template('animal_list.html')
+    pictures = db_conn.session.query(Picture).all()
+    return render_template('animal_list.html', pictures=pictures)
 

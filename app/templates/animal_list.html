@@ -9,13 +9,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    
     <title>Animal list</title>
 </head>
 <body>
     {{navbar()}}
-    
+
+    <div class="object_list_container">
+
+        {% for animal in pictures %}
+          
+                <img src="{{ animal.picture_url_slug }}" alt="animal" class="object_list_img">
+                
+                
+            </div>
+        {%endfor%}
+    </div>
     <h1>Animal list</h1>
+
 </body>
 </html>
     
