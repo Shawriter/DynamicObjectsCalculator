@@ -19,7 +19,7 @@
 
         {% for animal in pictures %}
           
-                <img src="{{ animal.picture_url_slug }}" alt="animal" class="object_list_img">
+                <img src="{{ url_for('static', filename=animal.picture_url_slug) }}" alt="animal" class="object_list_img">
                 
                 
             </div>

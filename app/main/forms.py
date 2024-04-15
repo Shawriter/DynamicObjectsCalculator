@@ -65,6 +65,7 @@ class DropDown(FlaskForm):
             ('Cyprinidae', 'Carps, Minnows'),
             ('Drosophilidae', 'Fruit Flies'),
             ('Elephantidae', 'Elephants'),
+            ('Equidae', 'Horses, Zebras'),
             ('Falconidae', 'Falcons'),
             ('Felidae', 'Cats'),
             ('Formicidae', 'Ants'),
@@ -85,11 +86,12 @@ class DropDown(FlaskForm):
             ('Testudinidae', 'Tortoises'),
             ('Tettigoniidae', 'Katydids'),
             ('Ursidae', 'Bears'),
-            ('Viperidae', 'Vipers')
+            ('Viperidae', 'Vipers'),
+            ('NOT LISTED', 'Not Listed')
         ]
         
         all_families_sorted = sorted(all_families, key=lambda x: x[1])
-        print(all_families_sorted)
+        #print(all_families_sorted)
         return all_families_sorted
        
 

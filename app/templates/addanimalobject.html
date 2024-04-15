@@ -1,5 +1,5 @@
 {% extends 'base.html'%}
-{% from "macros/generalform.html" import form_field, navbar %}
+{% from "macros/generalform.html" import form_field, navbar, message_macro_2 %}
 {% block content %}
 
 <!DOCTYPE html>
@@ -31,7 +31,7 @@
         </div> 
       </div> 
     </form>
-
+    {{ message_macro_2() }}
   </div> 
 </body>
 </html>

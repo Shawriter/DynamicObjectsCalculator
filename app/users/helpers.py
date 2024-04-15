@@ -1,5 +1,5 @@
 from flask import render_template, request 
-#from ..database import db
+from ..database import db
 
 
 
@@ -28,3 +28,4 @@ class ContentHelpers:
                 #(db.Content.body.contains(search)))
         return self.object_list(template, query, **kwargs)
 
+  

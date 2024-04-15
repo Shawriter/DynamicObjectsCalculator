@@ -7,7 +7,7 @@ from . import users
 from ..database.db import UserContent, Content, Picture
 from .. import config
 from flask_login import login_required, current_user
-
+import datetime
 
 
 @users.route('/profile/<slug>', methods=['GET', 'POST'])
@@ -75,26 +75,49 @@ def image_upload():
         
         image_file = request.files['file'] 
         filename = os.path.join(config['development'].IMAGES_DIR, 
-                                    secure_filename(image_file.filename)) 
+                                 secure_filename(image_file.filename)) 
         
-        filenamedb =  config['development'].IMAGES_DIR + "\\" + secure_filename(image_file.filename)
-        print(filenamedb, 'filename and filenamedb')
+        filenamedb =  "/uploads/" + secure_filename(image_file.filename)
 
-        new_content = Content(name=title, title=title, public_content=public_content, species=species)
-        new_content.image_path = filenamedb
-        db_conn.session.add(new_content)
-        db_conn.session.commit() 
+        #assert image_file and filename is not None, 'file and filename not found' 
 
-        new_content_image = Picture(content_id=new_content.id, picture_url_slug=filenamedb) #content_id is a constraint
-        db_conn.session.add(new_content_image)
-        db_conn.session.commit()
+        #print(filenamedb, 'filename and filenamedb')
 
+        try:
+
+            if image_file and filename != None:
+
+                new_content = Content(name=title, title=title, public_content=public_content, species=species)
+                new_content.image_path = filenamedb
+                db_conn.session.add(new_content)
+                db_conn.session.commit() 
+
+                if os.path.exists(image_file.filename):
+                    new_filename = secure_filename(image_file.filename + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+                    new_content_image = Picture(content_id=new_content.id, picture_url_slug=new_filename)
+                    db_conn.session.add(new_content_image)
+                    db_conn.session.commit()
+                    image_file.save(new_filename)
+                else:
+                    new_content_image = Picture(content_id=new_content.id, picture_url_slug=filenamedb)
+                    db_conn.session.add(new_content_image)
+                    db_conn.session.commit()
+                    image_file.save(filename) 
+            else:
+                flash('No file selected', 'alert')
+                return redirect(url_for('users.add'))
+             #content_id is a constraint
             
-        assert image_file and filename is not None, 'file and filename not found' 
+        except Exception as e:
+            print(e)
+            db_conn.session.rollback()
+            flash('Error saving content', 'error')
+            return redirect(url_for('users.content'))
 
-        image_file.save(filename) 
-        flash('Saved %s' % os.path.basename(filename), 'success') 
-        return redirect(url_for('users.content')) 
+
+        
+        flash('Saved content! Content is displayed in the animal list.', 'success') 
+        return redirect(url_for('users.add')) 
   
     return render_template('index.html')
 
@@ -103,4 +126,10 @@ def image_upload():
 def content():
     pictures = db_conn.session.query(Picture).all()
     return render_template('animal_list.html', pictures=pictures)
+
+@users.route('/content/<slug>', methods=['GET', 'POST'])
+def content_detail(slug):
+    content = Content.query.filter(Content.slug == slug).first_or_404()
+    return render_template('animal_detail.html', content=content)
+
 

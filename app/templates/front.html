@@ -11,6 +11,7 @@
     
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
     <script src="{{ url_for('static', filename='js/squirrelanimate.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/search.js') }}"></script>
     
 </head>
 <body id="front_body_id">
@@ -36,11 +37,12 @@
     </head> 
     <body> 
       <div id="squirrel"></div> 
-      <form class="form-inline well" id="search_box" method="get" role="form"> 
+      <form class="form-inline well" id="search_box" method="get" action="{{ url_for('main.search')}}" role="form"> 
         <div class="input-group"> 
         <input class="form-control input-xs" name="q" placeholder="Search..."  /> 
+        <div id="results"></div>
         <span class="input-group-btn"> 
-            <button class="btn btn-default" type="submit">Go</button> 
+            <button class="btn btn-default" id="search_button" type="submit">Search</button> 
         </span> 
         </div> 
     </form> 

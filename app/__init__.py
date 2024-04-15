@@ -34,7 +34,7 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     
     config[config_name].init_app(app)
-    print(config[config_name].SQLALCHEMY_DATABASE_URI, config[config_name].IMAGES_DIR)
+    #print(config[config_name].SQLALCHEMY_DATABASE_URI, config[config_name].IMAGES_DIR)
     bootstrap.init_app(app)
     #fa.init_app(app)
     
@@ -42,7 +42,7 @@ def create_app(config_name):
     db_conn.init_app(app)
    
     
-    print(config[config_name].SQLALCHEMY_DATABASE_URI, config[config_name].IMAGES_DIR)
+    #print(config[config_name].SQLALCHEMY_DATABASE_URI, config[config_name].IMAGES_DIR)
     login_manager.init_app(app)
     csrf.init_app(app)
 

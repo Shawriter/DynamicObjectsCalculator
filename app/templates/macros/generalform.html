@@ -43,6 +43,20 @@
                         {% endif %}
                         {% endwith %}
 {% endmacro %}
+{% macro message_macro_2() %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            
+                            {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" id="add_animal_flash" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                              </div>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                        {% endwith %}
+{% endmacro %}
 
 {% macro form_field(field) %} 
   <div class="form-group{% if field.errors %} has-error has-feedback{% 

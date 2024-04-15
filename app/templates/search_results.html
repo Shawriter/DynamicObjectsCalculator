@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% from "macros/generalform.html" import form_field, navbar, message_macro %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search results</title>
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    
+</head>
+<body>
+    {{navbar()}}
+    <div class="search_results_container">
+        <h1>Search results</h1>
+        <div class="search_results_list">
+            {% for animal in results %}
+                <div class="search_results_item">
+                    <img src="{{ url_for('static', filename=animal.picture_url_slug) }}" alt="animal" class="search_results_img">
+                    <h2>{{ animal.title }}</h2>
+                    <p>{{ animal.public_content }}</p>
+                    
+                </div>
+            {% endfor %}
+        </div>
+</body>
+</html>
+
+{% endblock %} 

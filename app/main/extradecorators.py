@@ -24,7 +24,7 @@ def slugify_decorator(cls):
                 
             return self.slug
 
-        def __repr__(self):
-            return f'<{self.__class__.__name__} {self.slug!r}>'
+        #def __repr__(self):
+            #return f'<{self.__class__.__name__} {self.slug!r}>'
     
     return slug_Wrapper

@@ -78,7 +78,7 @@ class UserRole(db_conn.Model):
 
 
 
-@slugify_decorator
+#@slugify_decorator
 class UserContent(db_conn.Model):
 
     __tablename__ = 'user_content'
@@ -89,7 +89,7 @@ class UserContent(db_conn.Model):
     content = db_conn.Column(db_conn.Text, nullable=False)
     created_at = db_conn.Column(db_conn.DateTime, default=db_conn.func.current_timestamp())
 
-@slugify_decorator
+#@slugify_decorator
 class Content(db_conn.Model):
 
     __tablename__ = 'content'
