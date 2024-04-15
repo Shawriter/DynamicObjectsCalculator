@@ -9,12 +9,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add</title>
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/seagullanimate.js') }}"></script>
 </head>
+
 <body id="add_content_body">
     {{navbar()}}
+    <div id="seagull"></div>
     <div class="add_content_container">
     <h1 id="add_header">Add an animal</h1>
     <img src="{{ url_for('static', filename='media/imgs/lakebird_add_content.jpg') }}" alt="animal" id="add_content_div_img">
+    <img src="{{ url_for('static', filename='media/imgs/beachimg.jpg') }}" alt="animal" id="add_content_div_img">
+    <img src="{{ url_for('static', filename='media/imgs/forestbackmountainimg_add_content.jpg') }}" alt="animal" id="add_content_div_img">
     <form action="{{ url_for('users.image_upload') }}" enctype="multipart/form-data" method="post" id="add_content_form">
       {{ form.hidden_tag() }}
       {% for field in form %} 
@@ -24,13 +29,14 @@
       <div class="form-group"> 
         <div class="col-sm-offset-3 col-sm-9"> 
 
-          <input type="file" name="file">
-          <button type="submit" class="btn btn-default" >Upload</button>
-          <a class="btn" href="{{ url_for('main.index') }}">Cancel</a> 
+          <input type="file" name="file" id="add_animal_font">
+          <button type="submit" class="btn btn-default" id="add_animal_font">Upload</button>
+          <a class="btn" href="{{ url_for('main.index') }}" id="add_animal_font">Cancel</a> 
 
         </div> 
       </div> 
     </form>
+    
     {{ message_macro_2() }}
   </div> 
 </body>

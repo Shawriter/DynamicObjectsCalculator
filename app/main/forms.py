@@ -97,7 +97,7 @@ class DropDown(FlaskForm):
 
 class ContentForm(FlaskForm): 
     title = StringField('Title', validators=[DataRequired()]) 
-    body = TextAreaField('Body', validators=[DataRequired()]) 
+    body = TextAreaField('Content', validators=[DataRequired()]) 
     family = SelectField('Family', choices=DropDown.get_families())
 
     
