@@ -21,10 +21,14 @@
     <img src="{{ url_for('static', filename='media/imgs/beachimg.jpg') }}" alt="animal" id="add_content_div_img">
     <img src="{{ url_for('static', filename='media/imgs/forestbackmountainimg_add_content.jpg') }}" alt="animal" id="add_content_div_img">
     <form action="{{ url_for('users.image_upload') }}" enctype="multipart/form-data" method="post" id="add_content_form">
-      {{ form.hidden_tag() }}
+      {{ form.csrf_token }}
       {% for field in form %} 
+        {% if field.label.field_id == 'csrf_token' %}
+          {{ continue }}
+        {% else %}
+          {{ form_field(field) }}
+        {% endif %}
         
-        {{ form_field(field) }} 
       {% endfor %} 
       <div class="form-group"> 
         <div class="col-sm-offset-3 col-sm-9"> 

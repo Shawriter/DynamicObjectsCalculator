@@ -21,7 +21,7 @@ function initialize(){
         moveSeagull(coordinates1, screenWidth);
         
 },false);
-addContentBody.addEventListener('mousedown',function(e){ 
+addContentBody.addEventListener('click',function(e){ 
     
     isMouseDown = true; 
     var loop = setInterval(function() {

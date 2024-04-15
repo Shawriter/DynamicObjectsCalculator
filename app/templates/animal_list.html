@@ -9,24 +9,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+  
+
     <title>Animal list</title>
 </head>
-<body>
+
+<body class="add_animal_body" onclick="playAudio()">
     {{navbar()}}
+    <h1 class="ubuntu-bold" id="animal_list_header">Animal list</h1>
+    <div class="object_list_container" >
 
-    <div class="object_list_container">
+        {% for animal, link in contents %}
 
-        {% for animal in pictures %}
-          
-                <img src="{{ url_for('static', filename=animal.picture_url_slug) }}" alt="animal" class="object_list_img">
+        <a class="a_img" href="{{ url_for('users.content_detail', slugified=link.title) }}">
+                <img class="object_list_img" src="{{ url_for('static', filename=animal.picture_url_slug) }}" alt="animal" >
                 
-                
-            </div>
+        </a>
+
         {%endfor%}
     </div>
-    <h1>Animal list</h1>
+    <audio id="myAudio" >
+        <source src="{{ url_for('static', filename='media/rainforestsound.m4a') }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
+    <script>
+       function playAudio() {
+            var myAudio = document.getElementById('myAudio');
+            myAudio.play();
+        }
+    </script>
 </body>
 </html>
     

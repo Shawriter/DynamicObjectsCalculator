@@ -11,20 +11,13 @@ def slugify_decorator(cls):
         @staticmethod
         def slugify(s):
             return re.sub('[^\\w]+', '-', s).lower()
-
-        def generate_slug(self):
-            self.slug = ''
-           
-            #if self.content:
-                #self.slug = self.slugify(self.content)
-                #self.repr_arg = self.content
-            #elif self.public_content:
-                #self.slug = self.slugify(self.public_content)
-                #self.repr_arg = self.public_content
-                
-            return self.slug
-
-        #def __repr__(self):
-            #return f'<{self.__class__.__name__} {self.slug!r}>'
-    
+        def generate_slug(self): 
+            self.slug = '' 
+            if self.title: 
+                self.slug = slugify(self.title) 
+            print('Slug:', self.slug)
+  
+        def __repr__(self): 
+            return '<Entry: %s>' % self.title
+            
     return slug_Wrapper

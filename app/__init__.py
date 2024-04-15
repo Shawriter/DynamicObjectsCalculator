@@ -1,7 +1,6 @@
 from flask import Flask, g
 from flask_bootstrap import Bootstrap
 #from flask_migrate import Migrate
-#from flask_fontawesome import FontAwesome
 #from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
@@ -20,7 +19,6 @@ login_manager.login_view = 'main.index'
 db_conn = SQLAlchemy()
 
 bootstrap = Bootstrap()
-#fa = FontAwesome()
 csrf = CSRFProtect()
 moment = Moment()
 
@@ -36,7 +34,6 @@ def create_app(config_name):
     config[config_name].init_app(app)
     #print(config[config_name].SQLALCHEMY_DATABASE_URI, config[config_name].IMAGES_DIR)
     bootstrap.init_app(app)
-    #fa.init_app(app)
     
     moment.init_app(app)
     db_conn.init_app(app)

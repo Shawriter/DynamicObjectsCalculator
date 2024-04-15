@@ -1,6 +1,6 @@
 function getRandomInt() {
     min = Math.ceil(100);
-    max = Math.floor(5000);
+    max = Math.floor(2000);
     var rand = Math.floor(Math.random() * (max - min + 1));
     return rand;
   }

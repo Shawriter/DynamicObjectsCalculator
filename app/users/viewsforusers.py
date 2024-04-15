@@ -10,7 +10,7 @@ from flask_login import login_required, current_user
 import datetime
 
 
-@users.route('/profile/<slug>', methods=['GET', 'POST'])
+@users.route('/profile/<slugified>', methods=['GET', 'POST'])
 @login_required
 def profile():
     return render_template('profile.html')
@@ -22,24 +22,6 @@ def add():
     form = ContentForm()
     return render_template('addanimalobject.html', form=form)
 
-
-@users.route('/add', methods=['GET', 'POST']) 
-@login_required
-def create(): 
-    if request.method == 'POST': 
-        form = ContentForm(request.form) 
-        
-        if form.validate(): 
-            entry = form.save_entry() 
-
-            assert entry and db_conn.session is not None, 'object not found'
-            #db_conn.session.add(entry) 
-            #db_conn.session.commit() 
-            #return redirect(url_for('entries.detail', slug=entry.slug)) 
-    else: 
-        form = ContentForm() 
-        
-    return render_template('addanimalobject.html', form=form, image_upload=image_upload)
 
 @users.route('/', methods=['GET', 'POST']) 
 @login_required
@@ -84,30 +66,36 @@ def image_upload():
         #print(filenamedb, 'filename and filenamedb')
 
         try:
-
+            query = db_conn.session.query(Content).filter_by(title=Content.title).first()
             if image_file and filename != None:
 
                 new_content = Content(name=title, title=title, public_content=public_content, species=species)
                 new_content.image_path = filenamedb
-                db_conn.session.add(new_content)
-                db_conn.session.commit() 
+
+                if query is title:
+                    flash('Content already exists', 'alert')
+                    return redirect(url_for('users.add'))
+                else:
+                    db_conn.session.add(new_content)
+                    db_conn.session.commit() 
 
                 if os.path.exists(image_file.filename):
                     new_filename = secure_filename(image_file.filename + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
                     new_content_image = Picture(content_id=new_content.id, picture_url_slug=new_filename)
+
                     db_conn.session.add(new_content_image)
                     db_conn.session.commit()
                     image_file.save(new_filename)
                 else:
-                    new_content_image = Picture(content_id=new_content.id, picture_url_slug=filenamedb)
+                    new_content_image = Picture(content_id=new_content.id, picture_url_slug=filenamedb) #content_id is a constraint
+            
                     db_conn.session.add(new_content_image)
                     db_conn.session.commit()
                     image_file.save(filename) 
             else:
                 flash('No file selected', 'alert')
                 return redirect(url_for('users.add'))
-             #content_id is a constraint
-            
+             
         except Exception as e:
             print(e)
             db_conn.session.rollback()
@@ -125,11 +113,18 @@ def image_upload():
 @users.route('/contents', methods=['GET', 'POST'])
 def content():
     pictures = db_conn.session.query(Picture).all()
-    return render_template('animal_list.html', pictures=pictures)
+    contents = db_conn.session.query(Content).all()
+    
+    zipped_data = zip(pictures, contents)
+    return render_template('animal_list.html',contents=zipped_data)
 
-@users.route('/content/<slug>', methods=['GET', 'POST'])
-def content_detail(slug):
-    content = Content.query.filter(Content.slug == slug).first_or_404()
-    return render_template('animal_detail.html', content=content)
+
+
+@users.route('/<slugified>', methods=['GET', 'POST'])
+def content_detail(slugified):
+    content = Content.query.filter_by(title=slugified).first_or_404()
+    picture = Picture.query.filter_by(content_id=content.id).first()
+    picture_URI = picture.picture_url_slug
+    return render_template('object_detail.html', content=content, title=slugified, picture=picture_URI)
 
 
