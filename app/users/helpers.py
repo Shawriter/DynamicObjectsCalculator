@@ -1,6 +1,7 @@
 from flask import render_template, request 
 from ..database import db
-
+from ..database.db import Content, UserContent, Picture
+from .. import db_conn
 
 
 
@@ -8,24 +9,20 @@ class ContentHelpers:
 
     def __init__(self):
         pass
-    
+
     @staticmethod
-    def object_list(template_name, query, paginate_by=20, **kwargs): 
-        page = request.args.get('page') 
-        if page and page.isdigit(): 
-            page = int(page) 
-        else: 
-            page = 1 
-        object_list = query.paginate(page, paginate_by) 
-        return render_template(template_name, object_list=object_list, 
-    **kwargs)
+    def get_content(flag, slugified): 
 
-   
-    def content(self, template, query, **kwargs): 
-        search = request.args.get('q') 
-        if search: 
-            query = query.filter()
-                #(db.Content.body.contains(search)))
-        return self.object_list(template, query, **kwargs)
-
-  
+        pictures = db_conn.session.query(Picture).all()
+        contents = db_conn.session.query(Content).all()
+        
+        if flag is True: # I set this to prevent unnecessary queries
+            content = Content.query.filter_by(title=slugified).first_or_404()
+            picture = Picture.query.filter_by(content_id=content.id).first()
+            picture_URI = picture.picture_url_slug
+            zipped_data_detailed = zip(pictures, contents)
+            return content, picture_URI, zipped_data_detailed
+        
+        zipped_data = zip(pictures, contents)
+        
+        return zipped_data

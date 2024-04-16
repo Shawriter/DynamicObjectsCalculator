@@ -17,13 +17,21 @@
     <div class="object_list_detail_container">
         
     
-    
+    {% set next_flag = 'True' %}
     <div class="object_list_detail_img_container">
         <img class="object_list_detail_img" src="{{ url_for('static', filename=picture) }}" alt="animal" >
         <h1 class="ubuntu-regular">{{content.title}}</h1>
         <p class="ubuntu-regular" id="object_list_detail_paragraph">{{content.public_content}}</p>
     </div>
     </div>
+   <div>
+    <a href="{{ url_for('users.next_previous', slugified=content.title, next_flag='True') }}" >
+        <img id="arrowright" src="{{ url_for('static', filename='media/imgs/arrow.gif') }}" alt="animal">
+    </a>
+    <a href="{{ url_for('users.next_previous', slugified=content.title, next_flag='True')}}" >
+        <img id="arrowleft" src="{{ url_for('static', filename='media/imgs/arrow.gif') }}" alt="animal">
+    </a>
+   </div>
 
 </body>
 </html>

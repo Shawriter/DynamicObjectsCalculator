@@ -8,7 +8,7 @@ from ..database.db import UserContent, Content, Picture
 from .. import config
 from flask_login import login_required, current_user
 import datetime
-
+from . import helpers
 
 @users.route('/profile/<slugified>', methods=['GET', 'POST'])
 @login_required
@@ -112,19 +112,36 @@ def image_upload():
 
 @users.route('/contents', methods=['GET', 'POST'])
 def content():
-    pictures = db_conn.session.query(Picture).all()
-    contents = db_conn.session.query(Content).all()
-    
-    zipped_data = zip(pictures, contents)
+ 
+    zipped_data = helpers.ContentHelpers.get_content(False, None)
+
     return render_template('animal_list.html',contents=zipped_data)
 
 
 
 @users.route('/<slugified>', methods=['GET', 'POST'])
 def content_detail(slugified):
-    content = Content.query.filter_by(title=slugified).first_or_404()
-    picture = Picture.query.filter_by(content_id=content.id).first()
-    picture_URI = picture.picture_url_slug
+    
+
+    content, picture_URI, zipped_data_detailed = helpers.ContentHelpers.get_content(True, slugified)
+    
+    return render_template('object_detail.html', content=content, title=slugified, picture=picture_URI, contents=zipped_data_detailed)
+
+
+@users.route('/next/<slugified>/<next_flag>', methods=['GET', 'POST'])
+def next_previous(slugified, next_flag):
+   
+    content, picture_URI, zipped_data_detailed = helpers.ContentHelpers.get_content(True, slugified)
+
+    previous_animal = slugified
+
+    if next_flag == 'True':
+        i = 0
+        for contents, picture in zipped_data_detailed:
+            typeof = type(contents)
+
+            if zipped_data_detailed[2][1].title == slugified:
+                next_animal = zipped_data_detailed[2+1][1].title
+                break
+        return render_template('object_detail.html', content=content, title=next_animal, picture=picture_URI)
     return render_template('object_detail.html', content=content, title=slugified, picture=picture_URI)
-
-
