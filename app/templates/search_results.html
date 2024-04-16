@@ -12,15 +12,21 @@
     
 </head>
 <body>
-    {{navbar()}}
+
+    {{navbar(current_user)}}
+    <img id="search_result_bg_img"src="{{ url_for('static', filename='media/imgs/searchresultsimg5.jpg') }}" alt="animal">
+    <h1 class="ubuntu-bold" id="search_results_h1" >Search results</h1>
     <div class="search_results_container">
-        <h1>Search results</h1>
+        
+        <h1 class="ubuntu-bold" id="search_results_h1" >Search results</h1>
         <div class="search_results_list">
-            {% for animal in results %}
+            {% for picture, animal in results %}
                 <div class="search_results_item">
-                    <img src="{{ url_for('static', filename=animal.picture_url_slug) }}" alt="animal" class="search_results_img">
-                    <h2>{{ animal.title }}</h2>
-                    <p>{{ animal.public_content }}</p>
+                    <a href="{{ url_for('users.content_detail', slugified=animal.title) }}">
+                        
+                        <img src="{{ url_for('static', filename=picture.picture_url_slug) }}" alt="animal" class="search_results_img">
+                        <h2 class="ubuntu-bold" id="search_result_animal_title">{{ animal.title }}</h2>
+                    </a>
                     
                 </div>
             {% endfor %}

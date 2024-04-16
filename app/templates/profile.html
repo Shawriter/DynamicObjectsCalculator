@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% from "macros/generalform.html" import form_field, navbar, message_macro %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search results</title>
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    
+</head>
+<body>
+
+    {{navbar(current_user)}}
+   
+    <div class="profile_side_menu_div_container">
+        <ul class="sidebar-menu">
+            <a href="{{ url_for('users.profile', user=current_user.username) }}">Profile</a>
+            <a href="">Settings</a>
+            <a href="">Logout</a>
+        </ul>
+    </div>
+    <div>
+    <div class="user_profile">
+        <h1 class="ubuntu-bold" id="profile_h1" >{{current_user.username}}'s profile</h1>
+        <div class="profile_img_container">
+            <img class="profile_img" src="{{ url_for('static', filename='media/imgs/profilepic.jpg') }}" alt="animal" >
+        </div>
+        <a href="{{url_for('users.profile_delete')}}"><button type="button" class="btn btn-primary btn-sm" id="delete_profile">Delete profile</button></a>
+        
+       
+    </div>
+    
+    </div>
+    <img id="profile_bg_img" src="{{ url_for('static', filename='media/imgs/profileback.jpg') }}" alt="animal">
+        
+
+</body>
+</html>
+
+{% endblock %} 

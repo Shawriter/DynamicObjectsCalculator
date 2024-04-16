@@ -112,6 +112,4 @@ class Picture(db_conn.Model):
 
     def __repr__(self):
         return f'<AnimalPicture {self.id!r}>'
-    
-    def __repr__(self):
-        return f'<Content {self.name!r}>'
+

@@ -12,8 +12,9 @@
     
     <title>{{content.title}}</title>
 </head>
-{{navbar()}}
+{{navbar(current_user)}}
 <body>
+    <img class="body_img" src="{{ url_for('static', filename='media/imgs/searchresultsimg2.jpg') }}" alt="animal" >
     <div class="object_list_detail_container">
         
     

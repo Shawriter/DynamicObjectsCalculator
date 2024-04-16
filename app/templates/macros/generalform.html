@@ -1,5 +1,5 @@
 <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
-{% macro navbar() %}
+{% macro navbar(current_user) %}
     <img src="{{ url_for('static', filename='media/imgs/navlogo2.png') }}" alt="logo" id="logo">
     <nav class="navbar navbar-expand-lg" id="nav_bar">
         <div class="nav_container">
@@ -15,10 +15,10 @@
                         <a class="nav-link" href="{{url_for('users.add')}}">Add animal</a>
                     </li>
                     <li class="nav-item {{ 'current' if request.path == url_for('main.front') else '' }}">
-                        <a class="nav-link" href="{{url_for('users.content')}}">Animal list</a>
+                        <a class="nav-link" href="{{url_for('users.content')}}">Animal gallery</a>
                     </li>
                     <li class="nav-item {{ 'current' if request.path == url_for('main.front') else '' }}">
-                        <a class="nav-link" href="#">User profile</a>
+                        <a class="nav-link" href="{{url_for('users.profile', user=current_user.username)}}">User profile</a>
                     </li>
                     <li class="nav-item {{ 'current' if request.path == url_for('main.front') else '' }}">
                         <a class="nav-link" href="{{ url_for('users.logout', next=request.path) }}">Log out</a>

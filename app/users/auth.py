@@ -25,6 +25,7 @@ def login():
             if form.validate(): 
                     print("VALIDATING")
                     login_user(username) 
+                    
                     print("LOGGING IN")
                     flash("Successfully logged in" , "success") 
                     print("FLASHING")

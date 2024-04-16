@@ -12,11 +12,25 @@ from flask_login import login_required, current_user
 import datetime
 from . import helpers
 
-@users.route('/profile/<slugified>', methods=['GET', 'POST'])
+@users.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    print(current_user.username, 'current user')
     return render_template('profile.html')
 
+
+@users.route('/profile/test', methods=['GET', 'POST'])
+@login_required
+def profile_delete():
+    try:
+        query = db_conn.session.query(UserContent).filter_by(username=current_user.id).first()
+        db_conn.session.delete(query)
+        print(query)
+        db_conn.session.commit()
+    except Exception as e:
+        print(e)
+        return redirect(url_for('users.profile'))
+    return render_template('profile.html')
 
 @users.route('/add', methods=['GET', 'POST'])
 @login_required
@@ -136,19 +150,14 @@ def next_previous(slugified, next_flag):
     content, picture_URI, zipped_data_detailed = helpers.ContentHelpers.get_content(True, slugified)
 
     previous_animal = slugified
-    #print(slugified)
-    #print(type(content))
+    
     try:
-
-        if next_flag == 'True':
-            i = 0
-            contents_dict = None
+         
             content_list = []
             picture_list = []
-            #print(zipped_data_detailed)
+        
             for picture, contents in zipped_data_detailed:
-                i += 1
-                #print(contents.title, picture.picture_url_slug)
+                
                 content_list.append(contents.title)
                 picture_list.append(picture.picture_url_slug)
 
@@ -156,14 +165,26 @@ def next_previous(slugified, next_flag):
             for i in range(len(content_list)):
 
                 if content_list[i] == previous_animal:
-                    next_animal = content_list.index(previous_animal)+1
-                    next_picture = picture_list.index('/uploads/' + previous_animal.lower() + '.jpg')+1
-                    #print(contents.title, previous_animal)
-                    next_animal_title = content_list[next_animal]
-                    
-                    next_animal_picture = picture_list[next_picture]
+                        if next_flag == 'True':
+                            next_animal = content_list.index(previous_animal)+1
+                            next_picture = picture_list.index('/uploads/' + previous_animal.lower() + '.jpg')+1
+                            #print(contents.title, previous_animal)
+                            next_animal_title = content_list[next_animal]
+                            
+                            next_animal_picture = picture_list[next_picture]
 
-                    next_picture_2 = next_animal_picture.lstrip('/')
+                            next_picture_2 = next_animal_picture.lstrip('/')
+                            break
+                        else:
+                            next_animal = content_list.index(previous_animal)-1
+                            next_picture = picture_list.index('/uploads/' + previous_animal.lower() + '.jpg')-1
+
+                            next_animal_title = content_list[next_animal]
+                            
+                            next_animal_picture = picture_list[next_picture]
+
+                            next_picture_2 = next_animal_picture.lstrip('/')
+                            break
               
                     
     except Exception as e:

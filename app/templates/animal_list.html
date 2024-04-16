@@ -11,11 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
 
-    <title>Animal list</title>
+    <title>Animal gallery</title>
 </head>
 
 <body class="add_animal_body" onclick="playAudio()">
-    {{navbar()}}
+    {{navbar(current_user)}}
     <h1 class="ubuntu-bold" id="animal_list_header">Animal list</h1>
     <div class="object_list_container" >
 
@@ -28,17 +28,7 @@
 
         {%endfor%}
     </div>
-    <audio id="myAudio" >
-        <source src="{{ url_for('static', filename='media/rainforestsound.m4a') }}" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
-    <script>
-       function playAudio() {
-            var myAudio = document.getElementById('myAudio');
-            myAudio.play();
-        }
-    </script>
+   
 </body>
 </html>
     

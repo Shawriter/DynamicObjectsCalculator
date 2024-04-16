@@ -13,13 +13,13 @@
 </head>
 
 <body id="add_content_body">
-    {{navbar()}}
+    {{navbar(current_user)}}
     <div id="seagull"></div>
     <div class="add_content_container">
     <h1 id="add_header">Add an animal</h1>
     <img src="{{ url_for('static', filename='media/imgs/lakebird_add_content.jpg') }}" alt="animal" id="add_content_div_img">
-    <img src="{{ url_for('static', filename='media/imgs/beachimg.jpg') }}" alt="animal" id="add_content_div_img">
-    <img src="{{ url_for('static', filename='media/imgs/forestbackmountainimg_add_content.jpg') }}" alt="animal" id="add_content_div_img">
+    
+   
     <form action="{{ url_for('users.image_upload') }}" enctype="multipart/form-data" method="post" id="add_content_form">
       {{ form.csrf_token }}
       {% for field in form %} 

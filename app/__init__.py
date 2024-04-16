@@ -41,8 +41,12 @@ def create_app(config_name):
     login_manager.init_app(app)
     csrf.init_app(app)
 
+    @login_manager.user_loader 
+    def _user_loader(id): 
+        return db_conn.User.query.get(int(id))
+    
     @app.before_request
-    def before_request() -> object:
+    def before_request():
         g.user = get_current_user()
 
     from .main import main as main_blueprint
