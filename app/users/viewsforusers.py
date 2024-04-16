@@ -6,6 +6,8 @@ from werkzeug.utils import secure_filename
 from . import users
 from ..database.db import UserContent, Content, Picture
 from .. import config
+
+
 from flask_login import login_required, current_user
 import datetime
 from . import helpers
@@ -134,14 +136,47 @@ def next_previous(slugified, next_flag):
     content, picture_URI, zipped_data_detailed = helpers.ContentHelpers.get_content(True, slugified)
 
     previous_animal = slugified
+    #print(slugified)
+    #print(type(content))
+    try:
 
-    if next_flag == 'True':
-        i = 0
-        for contents, picture in zipped_data_detailed:
-            typeof = type(contents)
+        if next_flag == 'True':
+            i = 0
+            contents_dict = None
+            content_list = []
+            picture_list = []
+            #print(zipped_data_detailed)
+            for picture, contents in zipped_data_detailed:
+                i += 1
+                #print(contents.title, picture.picture_url_slug)
+                content_list.append(contents.title)
+                picture_list.append(picture.picture_url_slug)
 
-            if zipped_data_detailed[2][1].title == slugified:
-                next_animal = zipped_data_detailed[2+1][1].title
-                break
-        return render_template('object_detail.html', content=content, title=next_animal, picture=picture_URI)
+                
+            for i in range(len(content_list)):
+
+                if content_list[i] == previous_animal:
+                    next_animal = content_list.index(previous_animal)+1
+                    next_picture = picture_list.index('/uploads/' + previous_animal.lower() + '.jpg')+1
+                    #print(contents.title, previous_animal)
+                    next_animal_title = content_list[next_animal]
+                    
+                    next_animal_picture = picture_list[next_picture]
+
+                    next_picture_2 = next_animal_picture.lstrip('/')
+              
+                    
+    except Exception as e:
+            print(e)
+            return render_template('object_detail.html', content=content, title=slugified, picture=picture_URI)
+    
+    return redirect(url_for('users.iter_route',next_animal_picture=next_picture_2, slugified=next_animal_title))
+    
+
+@users.route('/<slugified>', methods=['GET', 'POST'])
+def iter_route(slugified):
+    content = Content.query.filter_by(title=slugified).first_or_404()
+    picture = Picture.query.filter_by(content_id=content.id).first()
+    picture_URI = picture.picture_url_slug
+    print(slugified,content, picture_URI)
     return render_template('object_detail.html', content=content, title=slugified, picture=picture_URI)
