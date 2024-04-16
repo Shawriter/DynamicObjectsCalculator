@@ -13,8 +13,8 @@ def slugify_decorator(cls):
             return re.sub('[^\\w]+', '-', s).lower()
         def generate_slug(self): 
             self.slug = '' 
-            if self.title: 
-                self.slug = slugify(self.title) 
+            #if self.title: 
+                #self.slug = slugify.slugify(self.title) 
             print('Slug:', self.slug)
   
         def __repr__(self): 

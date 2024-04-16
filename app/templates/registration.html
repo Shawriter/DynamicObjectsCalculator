@@ -7,7 +7,7 @@
     <!-- Include Bootstrap CSS -->
 </head>
 <body>
-    {{navbar()}}    
+    {{navbar(current_user)}}    
     <div class="container">
         <h2>Registration Form</h2>
         <form action="{{url_for('users.register')}}" method="POST">

@@ -33,7 +33,6 @@ def profile_delete():
     return render_template('profile.html')
 
 @users.route('/add', methods=['GET', 'POST'])
-@login_required
 def add():
     form = ContentForm()
     return render_template('addanimalobject.html', form=form)
@@ -64,7 +63,7 @@ def image_upload():
         print("User is authenticated")
         
     if request.method == 'POST': 
-
+        print("POST")
         content_form = ContentForm(request.form)
 
         title = content_form.title.data
@@ -76,25 +75,25 @@ def image_upload():
                                  secure_filename(image_file.filename)) 
         
         filenamedb =  "/uploads/" + secure_filename(image_file.filename)
-
+        print("filenamedb, 'filename db'")
         #assert image_file and filename is not None, 'file and filename not found' 
 
         #print(filenamedb, 'filename and filenamedb')
 
         try:
-            query = db_conn.session.query(Content).filter_by(title=Content.title).first()
+            query = db_conn.session.query(Content).filter_by(title=title).first()
             if image_file and filename != None:
-
+                print('image file and filename')
                 new_content = Content(name=title, title=title, public_content=public_content, species=species)
                 new_content.image_path = filenamedb
-
+                print('new content image path')
                 if query is title:
                     flash('Content already exists', 'alert')
                     return redirect(url_for('users.add'))
                 else:
                     db_conn.session.add(new_content)
                     db_conn.session.commit() 
-
+                print('new contentadssssssssssssss')
                 if os.path.exists(image_file.filename):
                     new_filename = secure_filename(image_file.filename + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
                     new_content_image = Picture(content_id=new_content.id, picture_url_slug=new_filename)
@@ -111,13 +110,13 @@ def image_upload():
             else:
                 flash('No file selected', 'alert')
                 return redirect(url_for('users.add'))
-             
         except Exception as e:
-            print(e)
+            #print(e)
             db_conn.session.rollback()
             flash('Error saving content', 'error')
-            return redirect(url_for('users.content'))
+            return redirect(url_for('users.add'))
 
+        
 
         
         flash('Saved content! Content is displayed in the animal list.', 'success') 

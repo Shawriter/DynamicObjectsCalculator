@@ -27,7 +27,7 @@ def login():
                     login_user(username) 
                     
                     print("LOGGING IN")
-                    flash("Successfully logged in" , "success") 
+                    flash(f"Successfully logged in as {current_user.username}", "success") 
                     print("FLASHING")
                     
                     return redirect(url_for('main.front'))
