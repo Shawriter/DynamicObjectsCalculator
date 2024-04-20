@@ -167,7 +167,7 @@ def next_previous(slugified, next_flag):
                         if next_flag == 'True':
                             next_animal = content_list.index(previous_animal)+1
                             next_picture = picture_list.index('/uploads/' + previous_animal.lower() + '.jpg')+1
-                            #print(contents.title, previous_animal)
+                            
                             next_animal_title = content_list[next_animal]
                             
                             next_animal_picture = picture_list[next_picture]
